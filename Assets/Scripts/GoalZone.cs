@@ -7,15 +7,13 @@ public class GoalZone : MonoBehaviour
 {
     public Text scoreText;
     int score;
+    public GameObject racket;
 
     private void Awake()
     {
         this.score = 0;
-    }
-
-    private void Update()
-    {
         this.scoreText.text = this.score.ToString();
+        this.scoreText.color = GetComponent<SpriteRenderer>().color;
     }
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
@@ -23,6 +21,7 @@ public class GoalZone : MonoBehaviour
         if (otherCollider.CompareTag("Ball"))
         {
             this.score += 1;
+            this.scoreText.text = this.score.ToString();
         }
     }
 }

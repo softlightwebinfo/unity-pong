@@ -14,6 +14,13 @@ public class Ball : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector2.right * this.speed;
             this.hasTheBallMoved = true;
         }
+
+        if (GameManager.sharedInstance.gameStarted)
+        {
+            string racketName = GetComponent<Rigidbody2D>().velocity.x > 0 ? "RacketLeft" : "RacketRight";
+            GameObject paddle = GameObject.Find(racketName);
+            GetComponent<SpriteRenderer>().color = paddle.GetComponent<SpriteRenderer>().color;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
