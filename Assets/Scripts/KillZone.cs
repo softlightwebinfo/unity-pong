@@ -9,6 +9,7 @@ public class KillZone : MonoBehaviour
         if (collision.tag == "Ball")
         {
             collision.gameObject.GetComponent<BallArkanoid>().ResetBall();
+            GetComponent<AudioSource>().Play();
         }
     }
 }

@@ -31,6 +31,7 @@ public class BallArkanoid : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        GetComponent<AudioSource>().Play();
         if (collision.gameObject.name == "Paddle")
         {
             float x = this.HitFactor(this.transform.position, collision.transform.position, collision.collider.bounds.size.x);
