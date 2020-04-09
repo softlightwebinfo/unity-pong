@@ -5,10 +5,11 @@ using UnityEngine;
 public class BallArkanoid : MonoBehaviour
 {
     public float speed = 10.0f;
+    public GameObject ballStartPosition;
 
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.up * this.speed;
+        this.StartMovement();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,5 +26,22 @@ public class BallArkanoid : MonoBehaviour
     private float HitFactor(Vector2 ball, Vector2 paddle, float paddleWidth)
     {
         return (ball.x - paddle.x) / paddleWidth;
+    }
+
+    public void ResetBall()
+    {
+        this.gameObject.transform.position = this.ballStartPosition.transform.position;
+        this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        Invoke("RestatartBallMovement", 2.0f);
+    }
+
+    public void StartMovement()
+    {
+        GetComponent<Rigidbody2D>().velocity = -(Vector2.up * this.speed);
+    }
+
+    public void RestatartBallMovement()
+    {
+        this.StartMovement();
     }
 }
