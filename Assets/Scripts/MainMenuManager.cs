@@ -15,4 +15,9 @@ public class MainMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("ArkanoidScene");
     }
+
+    public void LoadMainSweeper()
+    {
+        SceneManager.LoadScene("MainSweeperScene");
+    }
 }

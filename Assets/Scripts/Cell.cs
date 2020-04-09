@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Cell : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class Cell : MonoBehaviour
         if (this.hasMine)
         {
             GridHelper.UncoverAllTheMines();
+            Invoke("ReturnToMainMenu", 4.0f);
         }
         else
         {
@@ -31,6 +33,11 @@ public class Cell : MonoBehaviour
             int y = (int)this.transform.parent.transform.position.y;
             this.loadTexture(GridHelper.CountAdjacentMines(x, y));
             GridHelper.FloodFillUncover(x, y, new bool[GridHelper.w, GridHelper.h]);
+            if (GridHelper.HasTheGameEnded())
+            {
+                Debug.Log("Fin de la partida");
+                Invoke("ReturnToMainMenu", 4.0f);
+            }
         }
     }
 
@@ -49,5 +56,10 @@ public class Cell : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sprite = this.emptyTextures[adjacentCount];
         }
+    }
+
+    private void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
