@@ -22,6 +22,7 @@ public class GoalZone : MonoBehaviour
         {
             this.score += 1;
             this.scoreText.text = this.score.ToString();
+            GameManager.sharedInstance.GoalScored();
         }
     }
 }
