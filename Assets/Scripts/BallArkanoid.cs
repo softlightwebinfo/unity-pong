@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class BallArkanoid : MonoBehaviour
 {
     public float speed = 10.0f;
@@ -56,20 +55,11 @@ public class BallArkanoid : MonoBehaviour
         {
             Invoke("RestatartBallMovement", 2.0f);
         }
-        else
-        {
-            Invoke("GoToMainMenu", 2.0f);
-        }
     }
 
     public void StartMovement()
     {
         GetComponent<Rigidbody2D>().velocity = (Vector2.up * this.speed);
-    }
-
-    public void GoToMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
     }
 
     public void RestatartBallMovement()
