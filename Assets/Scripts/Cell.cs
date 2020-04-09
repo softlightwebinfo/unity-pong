@@ -23,11 +23,14 @@ public class Cell : MonoBehaviour
     {
         if (this.hasMine)
         {
-
+            GridHelper.UncoverAllTheMines();
         }
         else
         {
-
+            int x = (int)this.transform.position.x;
+            int y = (int)this.transform.parent.transform.position.y;
+            this.loadTexture(GridHelper.CountAdjacentMines(x, y));
+            GridHelper.FloodFillUncover(x, y, new bool[GridHelper.w, GridHelper.h]);
         }
     }
 
