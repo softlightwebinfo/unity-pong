@@ -1,15 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class BallArkanoid : MonoBehaviour
 {
     public float speed = 10.0f;
+    private float speedInitial;
     public GameObject ballStartPosition;
+    public int lives = 3;
+
+    [SerializeField]
+    [Range(1.0f, 2.0f)]
+    public float difficultyFactor = 1.005f;
 
     void Start()
     {
+        this.speedInitial = this.speed;
         this.StartMovement();
+        StartCoroutine("UpgradeDifficulty");
+    }
+
+    IEnumerator UpgradeDifficulty()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+            this.speed *= this.difficultyFactor;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -30,14 +47,28 @@ public class BallArkanoid : MonoBehaviour
 
     public void ResetBall()
     {
+        this.lives--;
+        this.speed = this.speedInitial;
         this.gameObject.transform.position = this.ballStartPosition.transform.position;
         this.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        Invoke("RestatartBallMovement", 2.0f);
+        if (lives > 0)
+        {
+            Invoke("RestatartBallMovement", 2.0f);
+        }
+        else
+        {
+            Invoke("GoToMainMenu", 2.0f);
+        }
     }
 
     public void StartMovement()
     {
-        GetComponent<Rigidbody2D>().velocity = -(Vector2.up * this.speed);
+        GetComponent<Rigidbody2D>().velocity = (Vector2.up * this.speed);
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void RestatartBallMovement()
